@@ -1,3 +1,4 @@
+'use client';
 import { Star, Utensils } from 'lucide-react'; // Cambiamos Quote por Utensils para el toque foody
 
 export default function Resenas() {
