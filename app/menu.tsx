@@ -1,19 +1,16 @@
 // components/Menu.tsx
-import Boton from "./components/boton"
+"use client"
 import CardMenu from "./components/cardMenu"
+import { MENU_DATA } from "../data/menu"
+import { useState } from "react"
 
 
 export default function Menu() {
-  const burgers = [
-    { id: 1, nombre: "Burger Czarnuszek", precio: "26.90€", desc: "Carne de vaca madurada, pan brioche, bacon ahumado y salsa secreta.", img: "/hamburguesa1.webp" },
-    { id: 2, nombre: "Burger Clásica", precio: "24.50€", desc: "La de siempre, pero mejor que nunca. Ingredientes locales de Alhaurín.", img: "/hamburguesa1.webp" },
-    { id: 3, nombre: "D1 Especial", precio: "28.00€", desc: "Doble carne, doble queso y nuestra salsa ahumada artesanal.", img: "/hamburguesa1.webp" },
-    { id: 4, nombre: "Veggie Delight", precio: "22.00€", desc: "Hamburguesa vegetariana con ingredientes frescos y sabrosos.", img: "/hamburguesa1.webp" },
-    { id: 5, nombre: "Spicy Inferno", precio: "27.50€", desc: "Para los amantes del picante, con jalapeños y salsa picante casera.", img: "/hamburguesa1.webp" },
-    { id: 6, nombre: "Blue Cheese Burger", precio: "29.00€", desc: "Con queso azul artesanal y cebolla caramelizada.", img: "/hamburguesa1.webp" },
-    { id: 7, nombre: "Mushroom Swiss", precio: "26.00€", desc: "Champiñones salteados y queso suizo derretido.", img: "/hamburguesa1.webp" },
-    { id: 8, nombre: "BBQ Bacon Burger", precio: "28.50€", desc: "Tocino crujiente y salsa BBQ casera.", img: "/hamburguesa1.webp" },
-  ];
+  // 1. Definimos el estado. 'burgers' es el valor inicial.
+  const [categoriaActiva, setCategoriaActiva] = useState('burgers');
+
+  // 2. Filtramos la base de datos según el estado
+  const productosFiltrados = MENU_DATA.filter(item => item.categoria === categoriaActiva);
 
   return (
     <section className="relative min-h-screen bg-[#0a0a0a] text-white py-20">
@@ -31,22 +28,67 @@ export default function Menu() {
 
         {/* Categorías (Scrollable en móvil) */}
         <div className="flex gap-4 overflow-x-auto pb-10 no-scrollbar items-center">
-          <Boton texto="Starters" />
-          <Boton texto="Burgers" active /> {/* Este llevará el fondo rojo */}
-          <Boton texto="Salads" />
-          <Boton texto="Drinks" />
-          <Boton texto="Desserts" />
+          <button 
+            onClick={() => setCategoriaActiva('entrantes')}
+            className={`px-8 py-2 rounded-full font-bold transition-all whitespace-nowrap ${
+              categoriaActiva === 'entrantes' 
+                ? "bg-red-600 text-white shadow-[0_0_20px_rgba(220,38,38,0.5)] scale-110" 
+                : "bg-white/5 text-white/60 hover:bg-white/10 border border-white/5"
+            }`}
+          >
+            Starters
+          </button>
+          <button 
+            onClick={() => setCategoriaActiva('burgers')}
+            className={`px-8 py-2 rounded-full font-bold transition-all whitespace-nowrap ${
+              categoriaActiva === 'burgers' 
+                ? "bg-red-600 text-white shadow-[0_0_20px_rgba(220,38,38,0.5)] scale-110" 
+                : "bg-white/5 text-white/60 hover:bg-white/10 border border-white/5"
+            }`}
+          >
+            Burgers
+          </button>
+          <button 
+            onClick={() => setCategoriaActiva('ensaladas')}
+            className={`px-8 py-2 rounded-full font-bold transition-all whitespace-nowrap ${
+              categoriaActiva === 'ensaladas' 
+                ? "bg-red-600 text-white shadow-[0_0_20px_rgba(220,38,38,0.5)] scale-110" 
+                : "bg-white/5 text-white/60 hover:bg-white/10 border border-white/5"
+            }`}
+          >
+            Salads
+          </button>
+          <button 
+            onClick={() => setCategoriaActiva('bebidas')}
+            className={`px-8 py-2 rounded-full font-bold transition-all whitespace-nowrap ${
+              categoriaActiva === 'bebidas' 
+                ? "bg-red-600 text-white shadow-[0_0_20px_rgba(220,38,38,0.5)] scale-110" 
+                : "bg-white/5 text-white/60 hover:bg-white/10 border border-white/5"
+            }`}
+          >
+            Drinks
+          </button>
+          <button 
+            onClick={() => setCategoriaActiva('postres')}
+            className={`px-8 py-2 rounded-full font-bold transition-all whitespace-nowrap ${
+              categoriaActiva === 'postres' 
+                ? "bg-red-600 text-white shadow-[0_0_20px_rgba(220,38,38,0.5)] scale-110" 
+                : "bg-white/5 text-white/60 hover:bg-white/10 border border-white/5"
+            }`}
+          >
+            Desserts
+          </button>
         </div>
 
         {/* Grid de Productos */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {burgers.map((burger) => (
+          {productosFiltrados.map((producto) => (
             <CardMenu 
-              key={burger.id}
-              nombre={burger.nombre}
-              precio={burger.precio}
-              descripcion={burger.desc}
-              imagen={burger.img}
+              key={producto.id}
+              nombre={producto.nombre}
+              precio={producto.precio}
+              descripcion={producto.descripcion}
+              imagen={producto.imagen}
             />
           ))}
         </div>
